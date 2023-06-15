@@ -455,8 +455,11 @@ fn generate_test_data<'a, Fq: Field + FftField, Fr: Field + FftField, G1Affine: 
     key.polynomial_store.insert(&"q_c_fft".to_string(), q_c_fft);
 
     let permutation_widget: Box<ProverPermutationWidget<'_>> =
+    let permutation_widget: Box<ProverPermutationWidget<'_>> =
         Box::new(ProverPermutationWidget::<3>::new(key.clone()));
 
+    let widget: Box<ProverArithmeticWidget<'_, StandardSettings>> =
+        Box::new(ProverArithmeticWidget::<_, StandardSettings>::new(key.clone()));
     let widget: Box<ProverArithmeticWidget<'_, StandardSettings>> =
         Box::new(ProverArithmeticWidget::<_, StandardSettings>::new(key.clone()));
 
@@ -478,6 +481,7 @@ use std::rc::Rc;
 use crate::{
     ecc::{
         reduced_ate_pairing_batch_precomputed, PippengerRuntimeState,
+        reduced_ate_pairing_batch_precomputed, PippengerRuntimeState,
     },
     plonk::{
         composer::composer_base::ComposerType,
@@ -490,6 +494,7 @@ use crate::{
             widgets::{
                 random_widgets::permutation_widget::ProverPermutationWidget,
                 transition_widgets::arithmetic_widget::ProverArithmeticWidget,
+            }, utils::permutation::compute_permutation_lagrange_base_single,
             }, utils::permutation::compute_permutation_lagrange_base_single,
         },
     },
